@@ -10,8 +10,8 @@ const App = () => {
     fetcher<QuestionResponse>('/api/questions'),
   );
 
-  const questions = mapQuestions(data?.response.results || []);
-  const tags = getTags(data?.response.results || []);
+  const questions = mapQuestions(data?.response || []);
+  const tags = getTags(data?.response || []);
   console.log({ questions, tags });
 
   return (

@@ -66,5 +66,5 @@ export interface Response {
 }
 
 export interface QuestionResponse {
-  response: Response;
+  response: Result[];
 }

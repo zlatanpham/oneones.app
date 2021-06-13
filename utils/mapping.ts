@@ -13,7 +13,6 @@ export function mapQuestions(data: Result[]) {
 export function getTags(data: Result[]) {
   const tags = data.reduce((a, c) => {
     let items = a;
-    console.log(c);
     c.properties.Tags.multi_select.forEach((tag) => {
       if (!a.find((t) => t.id === tag.id)) {
         items = [...items, tag];
