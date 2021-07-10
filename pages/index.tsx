@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import fetcher from 'libs/fetcher';
-import { MultiSelect, QuestionResponse } from 'types/schema';
+import { MultiSelect, Response } from 'types/schema';
 import { getTags, mapQuestions } from 'utils/mapping';
 import { GetStaticProps } from 'next';
 import { AppContextProvider, useAppContext } from 'context/AppContextProvider';
+import { Client } from '@notionhq/client';
+
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 const InnerApp = () => {
   const [showQuestions, setShowQuestions] = useState(false);
@@ -95,14 +97,31 @@ function App({
   );
 }
 
-const baseURL = process.env.VERCEL_URL;
-
 export const getStaticProps: GetStaticProps = async () => {
-  const res = await fetcher<QuestionResponse>(
-    `${baseURL || 'http://localhost:3000'}/api/questions`,
-  );
-  const questions = mapQuestions(res?.response || []);
-  const tags = getTags(res?.response || []);
+  const getData = async (
+    cursor: string | undefined,
+    pageSize: number,
+    holder: any[],
+  ) => {
+    // @ts-ignore
+    const response: Response = await notion.databases.query({
+      database_id: process.env.NOTION_DATABASE_ID || '',
+      page_size: pageSize,
+      start_cursor: cursor,
+    });
+
+    holder.push(...response.results);
+
+    if (response.has_more && process.env.NODE_ENV === 'production') {
+      await getData(response.next_cursor, pageSize, holder);
+    }
+  };
+
+  const response: any[] = [];
+  await getData(undefined, 100, response);
+
+  const questions = mapQuestions(response || []);
+  const tags = getTags(response || []);
 
   return {
     props: { questions, tags },
