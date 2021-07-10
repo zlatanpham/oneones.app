@@ -5,13 +5,20 @@ import { GetStaticProps } from 'next';
 import { AppContextProvider, useAppContext } from 'context/AppContextProvider';
 import { Client } from '@notionhq/client';
 import { Button } from 'components';
+import { BiRefresh } from 'react-icons/bi';
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 const InnerApp = () => {
   const [showQuestions, setShowQuestions] = useState(false);
-  const { questionGroups, popQuestion, pushQuestion, refresh, reset } =
-    useAppContext();
+  const {
+    questionGroups,
+    popQuestion,
+    pushQuestion,
+    refresh,
+    reset,
+    refreshQuestion,
+  } = useAppContext();
 
   const totalQuestions = questionGroups.reduce(
     (a, c) => a + c.questions.length,
@@ -68,8 +75,18 @@ const InnerApp = () => {
                   <h4 className="font-bold">{name}</h4>
                   <ul className="divide-y">
                     {questions.map(({ title, id }) => (
-                      <li key={id} className="py-2">
-                        {title}
+                      <li
+                        key={id}
+                        className="py-2 flex items-center justify-between"
+                      >
+                        <span>{title}</span>
+
+                        <button
+                          className="text-xl"
+                          onClick={() => refreshQuestion(id)}
+                        >
+                          <BiRefresh />
+                        </button>
                       </li>
                     ))}
                   </ul>
@@ -96,7 +113,9 @@ const InnerApp = () => {
           {showQuestions && (
             <div className="fixed inset-x-0 bottom-0 border-t border-gray-300 px-5 sm:px-8 h-20 flex justify-between items-center bg-white">
               <button onClick={() => setShowQuestions(false)}>Back</button>
-              <Button onClick={() => refresh()}>Refresh</Button>
+              <Button onClick={() => refresh()}>
+                <BiRefresh className="mr-2 text-lg" /> Refresh
+              </Button>
             </div>
           )}
         </>

@@ -9,7 +9,7 @@ export const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
   return (
     <button
       className={classnames(
-        'px-5 py-3 bg-primary text-white font-semibold focus:ring-3 transition duration-150 rounded-full',
+        'inline-flex items-center px-5 py-3 bg-primary text-white font-semibold focus:ring-3 transition duration-150 rounded-full',
         className,
       )}
       {...rest}

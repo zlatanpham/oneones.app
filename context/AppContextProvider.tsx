@@ -11,6 +11,7 @@ interface AppContextValues {
   questionGroups: QuestionGroup[];
   pushQuestion: (tagId: string) => void;
   popQuestion: (tagId: string) => void;
+  refreshQuestion: (id: string) => void;
   refresh: () => void;
   reset: () => void;
 }
@@ -121,6 +122,36 @@ export const AppContextProvider: React.FC<{
     });
   };
 
+  const refreshQuestion = (id: string) => {
+    setInternalQuestionGroups((prev) => {
+      return prev.map(({ questions, ...rest }) => {
+        let newQuestions = questions;
+        const currentQuestion = questions.find((q) => q.id === id);
+
+        if (currentQuestion) {
+          const tag = currentQuestion?.tags[0].id;
+          const questionsByTag = internalQuestions.current.filter((q) =>
+            q.tags.find((t) => t.id === tag),
+          );
+          if (questionsByTag.length > 0) {
+            const randomIndex = getRandomInt(questionsByTag.length - 1);
+            const addedQuestion = questionsByTag[randomIndex];
+
+            newQuestions = questions.map((q) => {
+              return q === currentQuestion ? addedQuestion : q;
+            });
+
+            internalQuestions.current = internalQuestions.current.map((q) => {
+              return q === addedQuestion ? currentQuestion : q;
+            });
+          }
+        }
+
+        return { ...rest, questions: newQuestions };
+      });
+    });
+  };
+
   return (
     <Provider
       value={{
@@ -130,6 +161,7 @@ export const AppContextProvider: React.FC<{
         popQuestion,
         refresh,
         reset,
+        refreshQuestion,
       }}
     >
       {children}
