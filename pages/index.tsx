@@ -59,12 +59,12 @@ const InnerApp = () => {
 
       <div
         className={classnames('max-w-3xl mx-auto sm:px-5', {
-          'pb-20 sm:pb-28': totalQuestions > 0,
+          'pb-24 sm:pb-28': totalQuestions > 0,
           'pb-10': totalQuestions === 0,
         })}
       >
         {!showQuestions && (
-          <div className="bg-white sm:rounded-lg px-5 sm:px-6 py-2 shadow animate-slide-up">
+          <div className="bg-white sm:rounded-lg px-5 sm:px-6 py-2 shadow">
             <ul className="divide-y divide-gray-200">
               {questionGroups.map(({ name, id, questions, color }) => (
                 <li className="flex justify-between py-3 space-x-5" key={id}>
