@@ -6,6 +6,7 @@ import { AppContextProvider, useAppContext } from 'context/AppContextProvider';
 import { Client } from '@notionhq/client';
 import { Button } from 'components';
 import { BiRefresh } from 'react-icons/bi';
+import { GoMarkGithub } from 'react-icons/go';
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -34,8 +35,10 @@ const InnerApp = () => {
             href="https://github.com/zlatanpham/oneones.app"
             target="_blank"
             rel="noreferrer"
+            arial-label="Go to oneones.app GitHub page"
+            className="text-xl"
           >
-            Github
+            <GoMarkGithub />
           </a>
         </div>
       </header>
@@ -83,9 +86,10 @@ const InnerApp = () => {
 
                         <button
                           className="text-xl"
+                          aria-label="Refresh"
                           onClick={() => refreshQuestion(id)}
                         >
-                          <BiRefresh />
+                          <BiRefresh aria-hidden />
                         </button>
                       </li>
                     ))}
