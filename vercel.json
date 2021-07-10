@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-boilerplate",
+  "name": "oneones.app",
   "version": 2,
   "public": false,
   "github": {
@@ -8,7 +8,7 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@now/next"
+      "use": "@vercel/next"
     }
   ],
   "routes": [
