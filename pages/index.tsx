@@ -57,10 +57,15 @@ const InnerApp = () => {
         </p>
       </div>
 
-      <div className="max-w-3xl mx-auto sm:px-5 pb-28">
+      <div
+        className={classnames('max-w-3xl mx-auto sm:px-5', {
+          'pb-20 sm:pb-28': totalQuestions > 0,
+          'pb-10': totalQuestions === 0,
+        })}
+      >
         {!showQuestions && (
           <div className="bg-white sm:rounded-lg px-5 sm:px-6 py-2 shadow animate-slide-up">
-            <ul className="divide-y">
+            <ul className="divide-y divide-gray-200">
               {questionGroups.map(({ name, id, questions, color }) => (
                 <li className="flex justify-between py-3 space-x-5" key={id}>
                   <Badge color={color}>{name}</Badge>
@@ -131,10 +136,25 @@ const InnerApp = () => {
         )}
       </div>
 
-      {totalQuestions > 0 ? (
-        <>
-          {!showQuestions && (
-            <div className="fixed inset-x-0 bottom-0 border-t border-gray-200 px-3 sm:px-8 h-20 flex justify-between items-center bg-white shadow">
+      <div
+        className={classnames(
+          'fixed inset-x-0 bottom-0 border-gray-200 border-t bg-white shadow transition duration-150',
+          {
+            '-z-1': totalQuestions === 0,
+            visible: totalQuestions > 0,
+            'translate-y-10 opacity-0': totalQuestions === 0,
+            'translate-y-0 opacity-100': totalQuestions > 0,
+          },
+        )}
+        aria-hidden={totalQuestions === 0}
+      >
+        <div
+          className={classnames(
+            'h-20 flex justify-between items-center px-3 sm:px-6 max-w-6xl mx-auto',
+          )}
+        >
+          {!showQuestions ? (
+            <>
               <div className="font-medium sm:text-base text-sm text-gray-800">
                 <span className="bg-secondary text-gray-800 rounded-full px-5 w-10 h-10 flex-none inline-flex items-center justify-center">
                   {totalQuestions}
@@ -152,14 +172,12 @@ const InnerApp = () => {
                   <BiReset className="text-2xl mr-1" /> Reset
                 </button>
                 <Button onClick={() => setShowQuestions(true)}>
-                  Generate <BiRightArrowAlt className="text-2xl ml-1" />
+                  Generate <BiRightArrowAlt className="text-xl ml-1" />
                 </Button>
               </div>
-            </div>
-          )}
-
-          {showQuestions && (
-            <div className="fixed inset-x-0 bottom-0 border-t border-gray-300 px-3 sm:px-8 h-20 flex justify-between items-center bg-white shadow">
+            </>
+          ) : (
+            <>
               <button
                 onClick={() => setShowQuestions(false)}
                 className="inline-flex items-center font-semibold text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
@@ -169,10 +187,10 @@ const InnerApp = () => {
               <Button onClick={() => refresh()}>
                 <BiRefresh className="mr-2 text-lg" /> Refresh
               </Button>
-            </div>
+            </>
           )}
-        </>
-      ) : null}
+        </div>
+      </div>
     </>
   );
 };

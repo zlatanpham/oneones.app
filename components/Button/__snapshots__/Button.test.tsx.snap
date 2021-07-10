@@ -2,8 +2,8 @@
 
 exports[`<Button/> Should match snapshot 1`] = `
 <button
-  class="px-5 py-3 bg-orange-600 text-white rounded"
+  class="inline-flex items-center sm:text-base text-sm px-5 py-3 bg-primary text-white font-medium focus:ring-3 transition duration-150 rounded-full"
 >
-  Hello
+  Click me
 </button>
 `;
