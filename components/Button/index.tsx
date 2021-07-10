@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 
-const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
+export const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
   children,
   className,
   ...rest
@@ -9,7 +9,7 @@ const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
   return (
     <button
       className={classnames(
-        'px-5 py-3 bg-orange-600 text-white rounded',
+        'px-5 py-3 bg-primary text-white font-semibold focus:ring-3 transition duration-150 rounded-full',
         className,
       )}
       {...rest}
@@ -18,5 +18,3 @@ const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
     </button>
   );
 };
-
-export default Button;

@@ -12,6 +12,7 @@ interface AppContextValues {
   pushQuestion: (tagId: string) => void;
   popQuestion: (tagId: string) => void;
   refresh: () => void;
+  reset: () => void;
 }
 
 const [Provider, useAppContext] = createContext<AppContextValues>({});
@@ -110,9 +111,26 @@ export const AppContextProvider: React.FC<{
     });
   };
 
+  const reset = () => {
+    setInternalQuestionGroups((prev) => {
+      return prev.map(({ questions, ...rest }) => {
+        internalQuestions.current.push(...questions);
+
+        return { ...rest, questions: [] };
+      });
+    });
+  };
+
   return (
     <Provider
-      value={{ tags, questionGroups, pushQuestion, popQuestion, refresh }}
+      value={{
+        tags,
+        questionGroups,
+        pushQuestion,
+        popQuestion,
+        refresh,
+        reset,
+      }}
     >
       {children}
     </Provider>

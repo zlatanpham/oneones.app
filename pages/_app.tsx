@@ -7,13 +7,9 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <div className="flex min-h-screen flex-col justify-between">
-        <main>
-          <div className="max-w-3xl mx-auto py-20">
-            <Component {...pageProps} />
-          </div>
-        </main>
-      </div>
+      <main>
+        <Component {...pageProps} />
+      </main>
     );
   }
 }
