@@ -1,5 +1,3 @@
-declare module 'twin.macro';
-
 // Media
 declare module '*.png';
 declare module '*.jpg';

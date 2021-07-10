@@ -1,8 +1,7 @@
 # NextJS Boilerplate
 
 - [x] typescript
-- [x] styled-components
-- [x] tailwind + twin.macro
+- [x] tailwind
 - [x] swr + isomorphic-unfetch
 
 ## Install it and run:
