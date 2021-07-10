@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MultiSelect, Response } from 'types/schema';
+import { MultiSelect } from 'types/schema';
 import { getTags, mapQuestions } from 'utils/mapping';
 import { GetStaticProps } from 'next';
 import { AppContextProvider, useAppContext } from 'context/AppContextProvider';
@@ -103,8 +103,7 @@ export const getStaticProps: GetStaticProps = async () => {
     pageSize: number,
     holder: any[],
   ) => {
-    // @ts-ignore
-    const response: Response = await notion.databases.query({
+    const response = await notion.databases.query({
       database_id: process.env.NOTION_DATABASE_ID || '',
       page_size: pageSize,
       start_cursor: cursor,
@@ -112,7 +111,11 @@ export const getStaticProps: GetStaticProps = async () => {
 
     holder.push(...response.results);
 
-    if (response.has_more && process.env.NODE_ENV === 'production') {
+    if (
+      response.has_more &&
+      response.next_cursor &&
+      process.env.NODE_ENV === 'production'
+    ) {
       await getData(response.next_cursor, pageSize, holder);
     }
   };
