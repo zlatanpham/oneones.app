@@ -6,6 +6,6 @@
 @tailwind utilities;
 
 body {
-  background-image: linear-gradient(#e0edff, #e0edff);
-  background-color: #e0edff;
+  background-color: #f0ecfb;
+  font-family: 'Poppins', sans-serif;
 }
