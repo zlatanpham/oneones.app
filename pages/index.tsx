@@ -12,8 +12,10 @@ import {
   BiReset,
   BiRightArrowAlt,
   BiArrowBack,
+  BiCopy,
 } from 'react-icons/bi';
 import classnames from 'classnames';
+import { useClipboard } from 'hooks';
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -27,6 +29,7 @@ const InnerApp = () => {
     reset,
     refreshQuestion,
   } = useAppContext();
+  const { copy } = useClipboard();
 
   const totalQuestions = questionGroups.reduce(
     (a, c) => a + c.questions.length,
@@ -36,7 +39,7 @@ const InnerApp = () => {
   return (
     <>
       <div className="max-w-6xl px-5 text-center mx-auto mb-8 space-y-2 pt-8 sm:pt-14">
-        <h1 className="font-medium text-xl sm:text-3xl text-gray-800">
+        <h1 className="font-semibold text-xl sm:text-3xl text-gray-800">
           One on One Question Generator
         </h1>
         <p className="text-gray-800 leading-snug sm:text-base text-sm sm:w-full w-2/3 mx-auto">
@@ -156,7 +159,7 @@ const InnerApp = () => {
                   onClick={() => reset()}
                   aria-label="Reset"
                   title="Reset"
-                  className="hidden sm:inline-flex items-center text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
+                  className="hidden sm:inline-flex items-center text-gray-600 font-medium hover:text-gray-900 transition duration-150 sm:text-base text-sm"
                 >
                   <BiReset className="text-2xl mr-1" /> Reset
                 </button>
@@ -177,18 +180,37 @@ const InnerApp = () => {
                   setShowQuestions(false);
                   window.scrollTo({ top: 0 });
                 }}
-                className="inline-flex items-center font-semibold text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
+                className="inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
               >
                 <BiArrowBack className="text-xl mr-2" /> Go back
               </button>
-              <Button
-                onClick={() => {
-                  refresh();
-                  window.scrollTo({ top: 0 });
-                }}
-              >
-                <BiRefresh className="mr-2 text-lg" /> Refresh
-              </Button>
+              <div className="flex items-center space-x-10">
+                <button
+                  aria-label="Reset"
+                  title="Reset"
+                  className="hidden sm:inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
+                  onClick={() => {
+                    refresh();
+                    window.scrollTo({ top: 0 });
+                  }}
+                >
+                  <BiRefresh className="mr-2 text-2xl" /> Refresh
+                </button>
+                <Button
+                  onClick={() => {
+                    const questions = questionGroups.reduce<string[]>(
+                      (a, c) => [
+                        ...a,
+                        ...c.questions.map(({ title }) => title),
+                      ],
+                      [],
+                    );
+                    copy(questions.join('\n'));
+                  }}
+                >
+                  <BiCopy className="mr-2 text-lg" /> Copy to clipboard
+                </Button>
+              </div>
             </>
           )}
         </div>
