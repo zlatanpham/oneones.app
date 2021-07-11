@@ -13,7 +13,6 @@ import {
   BiRightArrowAlt,
   BiArrowBack,
 } from 'react-icons/bi';
-import { GoMarkGithub } from 'react-icons/go';
 import classnames from 'classnames';
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
@@ -36,40 +35,28 @@ const InnerApp = () => {
 
   return (
     <>
-      <header>
-        <div className="max-w-6xl px-5 flex items-center mx-auto h-16 justify-between">
-          <span className="font-bold text-2xl text-primary">oneones</span>
-          <a
-            href="https://github.com/zlatanpham/oneones.app"
-            target="_blank"
-            rel="noreferrer"
-            arial-label="Go to oneones.app GitHub page"
-            className="text-xl opacity-75 hover:opacity-100 transition duration-150"
-          >
-            <GoMarkGithub />
-          </a>
-        </div>
-      </header>
-
-      <div className="max-w-6xl px-5 text-center mx-auto mt-5 mb-12">
-        <p className="font-medium text-lg sm:text-2xl text-gray-800">
+      <div className="max-w-6xl px-5 text-center mx-auto mb-8 space-y-2 pt-8 sm:pt-14">
+        <h1 className="font-medium text-xl sm:text-3xl text-gray-800">
+          One on One Question Generator
+        </h1>
+        <p className="text-gray-800 leading-snug sm:text-base text-sm sm:w-full w-2/3 mx-auto">
           Fuel your next one-on-one meeting with great questions.
         </p>
       </div>
 
       <div
-        className={classnames('max-w-3xl mx-auto sm:px-5', {
+        className={classnames('max-w-3xl mx-auto px-5', {
           'pb-24 sm:pb-28': totalQuestions > 0,
           'pb-10': totalQuestions === 0,
         })}
       >
         {!showQuestions && (
-          <div className="bg-white sm:rounded-lg px-5 sm:px-6 py-2 shadow">
-            <ul className="divide-y divide-gray-200">
+          <div className="bg-white rounded-lg px-5 sm:px-6 py-3 border border-gray-300 max-w-xl mx-auto select-none">
+            <ul className="divide-y divide-gray-300">
               {questionGroups.map(({ name, id, questions, color }) => (
                 <li className="flex justify-between py-3 space-x-5" key={id}>
                   <Badge color={color}>{name}</Badge>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-1.5">
                     <button
                       className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-2xl text-gray-500 hover:text-gray-900"
                       onClick={() => pushQuestion(id)}
@@ -82,10 +69,10 @@ const InnerApp = () => {
                       readOnly
                       value={questions.length}
                       className={classnames(
-                        'text-center w-10 px-2 bg-gray-100 rounded-full font-medium border border-gray-300',
+                        'text-center w-10 px-2 rounded-full font-medium sm:text-base text-sm h-6 transition-all duration-150',
                         questions.length === 0
-                          ? 'text-gray-400'
-                          : 'text-gray-900',
+                          ? 'text-gray-500 bg-gray-100 border-gray-300'
+                          : 'text-gray-800 bg-secondary border-secondary',
                       )}
                     />
                     <button
@@ -107,21 +94,23 @@ const InnerApp = () => {
               .filter(({ questions }) => questions.length > 0)
               .map(({ name, questions, color }) => (
                 <div
-                  className="space-y-5 bg-white sm:rounded-lg px-5 sm:px-6 pt-5 pb-3 shadow animate-slide-up"
+                  className="space-y-5 bg-white rounded-lg px-5 sm:px-6 pt-5 pb-3 border border-gray-300 animate-slide-up"
                   // style={{ animationDelay: `${index * 200}ms` }}
                   key={name}
                 >
                   <Badge color={color}>{name}</Badge>
-                  <ul className="divide-y">
+                  <ul className="divide-y divide-gray-300">
                     {questions.map(({ title, id }) => (
                       <li
                         key={id}
-                        className="py-3 flex items-center justify-between space-x-5"
+                        className="py-3 flex items-center justify-between space-x-5 group"
                       >
-                        <div className="w-full text-gray-800">{title}</div>
+                        <div className="w-full text-gray-800 sm:text-base text-sm">
+                          {title}
+                        </div>
 
                         <button
-                          className="text-2xl text-gray-500 hover:text-gray-900 transition duration-150"
+                          className="text-2xl text-gray-500 hover:text-gray-900 transition-color duration-150 opacity-0 group-hover:opacity-100"
                           aria-label="Refresh"
                           onClick={() => refreshQuestion(id)}
                         >
@@ -138,7 +127,7 @@ const InnerApp = () => {
 
       <div
         className={classnames(
-          'fixed inset-x-0 bottom-0 border-gray-200 border-t bg-white shadow transition duration-150',
+          'fixed inset-x-0 bottom-0 border-gray-200 border-t bg-white border border-gray-300 transition duration-150 select-none',
           {
             '-z-1': totalQuestions === 0,
             visible: totalQuestions > 0,
@@ -150,7 +139,7 @@ const InnerApp = () => {
       >
         <div
           className={classnames(
-            'h-20 flex justify-between items-center px-3 sm:px-6 max-w-6xl mx-auto',
+            'sm:h-20 h-16 flex justify-between items-center px-3 sm:px-6 max-w-6xl mx-auto',
           )}
         >
           {!showQuestions ? (
@@ -171,7 +160,12 @@ const InnerApp = () => {
                 >
                   <BiReset className="text-2xl mr-1" /> Reset
                 </button>
-                <Button onClick={() => setShowQuestions(true)}>
+                <Button
+                  onClick={() => {
+                    setShowQuestions(true);
+                    window.scrollTo({ top: 0 });
+                  }}
+                >
                   Generate <BiRightArrowAlt className="text-xl ml-1" />
                 </Button>
               </div>
@@ -184,7 +178,12 @@ const InnerApp = () => {
               >
                 <BiArrowBack className="text-xl mr-2" /> Go back
               </button>
-              <Button onClick={() => refresh()}>
+              <Button
+                onClick={() => {
+                  refresh();
+                  window.scrollTo({ top: 0 });
+                }}
+              >
                 <BiRefresh className="mr-2 text-lg" /> Refresh
               </Button>
             </>

@@ -10,7 +10,7 @@ export const Badge = ({
   return (
     <span
       className={classnames(
-        'px-5 py-2 rounded-full font-medium text-sm inline-flex',
+        'px-5 py-2 rounded-full font-medium sm:text-sm text-xs inline-flex select-none',
         {
           'bg-notion-default': color === 'default',
           'bg-notion-gray': color === 'gray',
