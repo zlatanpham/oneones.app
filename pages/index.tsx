@@ -127,7 +127,7 @@ const InnerApp = () => {
 
       <div
         className={classnames(
-          'fixed inset-x-0 bottom-0 border-gray-200 border-t bg-white border border-gray-300 transition duration-150 select-none',
+          'fixed inset-x-0 bottom-0 border-t bg-white border border-gray-300 transition duration-150 select-none',
           {
             '-z-1': totalQuestions === 0,
             visible: totalQuestions > 0,
@@ -173,7 +173,10 @@ const InnerApp = () => {
           ) : (
             <>
               <button
-                onClick={() => setShowQuestions(false)}
+                onClick={() => {
+                  setShowQuestions(false);
+                  window.scrollTo({ top: 0 });
+                }}
                 className="inline-flex items-center font-semibold text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
               >
                 <BiArrowBack className="text-xl mr-2" /> Go back
