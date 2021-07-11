@@ -2,7 +2,7 @@
 
 exports[`<Button/> Should match snapshot 1`] = `
 <button
-  class="inline-flex items-center sm:text-base text-sm px-5 py-3 bg-primary text-white font-medium focus:ring-3 transition duration-150 rounded-full"
+  class="inline-flex items-center sm:text-base text-xs sm:px-5 px-4 sm:py-3 py-2.5 bg-primary text-white font-medium focus:ring-3 transition duration-150 rounded-full"
 >
   Click me
 </button>

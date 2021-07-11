@@ -5,6 +5,11 @@
 /* purgecss end ignore */
 @tailwind utilities;
 
+html {
+  -webkit-text-size-adjust: none;
+  touch-action: manipulation;
+}
+
 body {
   background-color: #f0ecfb;
   font-family: 'Poppins', sans-serif;

@@ -38,30 +38,31 @@ const InnerApp = () => {
 
   return (
     <>
-      <div className="max-w-6xl px-5 text-center mx-auto mb-8 space-y-2 pt-8 sm:pt-14">
-        <h1 className="font-semibold text-xl sm:text-3xl text-gray-800">
+      <div className="max-w-6xl px-5 text-center mx-auto sm:mb-8 mb-6 space-y-2 pt-8 sm:pt-10 lg:pt-14">
+        <h1 className="font-semibold text-xl sm:text-3xl text-primary">
           One on One Question Generator
         </h1>
-        <p className="text-gray-800 leading-snug sm:text-base text-sm sm:w-full w-2/3 mx-auto">
-          Fuel your next one-on-one meeting with great questions.
+        <p className="text-primary leading-snug sm:text-base text-sm sm:w-full w-2/3 mx-auto">
+          Fuel your next one-on-one <br className="sm:hidden" /> meeting with
+          great questions.
         </p>
       </div>
 
       <div
-        className={classnames('max-w-3xl mx-auto px-5', {
-          'pb-24 sm:pb-28': totalQuestions > 0,
-          'pb-10': totalQuestions === 0,
+        className={classnames('lg:max-w-3xl max-w-2xl mx-auto sm:px-5 px-4', {
+          'pb-20 sm:pb-28': totalQuestions > 0,
+          'pb-8': totalQuestions === 0,
         })}
       >
         {!showQuestions && (
-          <div className="bg-white rounded-lg px-5 sm:px-6 py-3 border border-gray-300 max-w-xl mx-auto select-none">
+          <div className="bg-white rounded-lg px-4 sm:px-6 py-1 sm:py-3 border border-gray-300 max-w-xl mx-auto select-none">
             <ul className="divide-y divide-gray-300">
               {questionGroups.map(({ name, id, questions, color }) => (
                 <li className="flex justify-between py-3 space-x-5" key={id}>
                   <Badge color={color}>{name}</Badge>
                   <div className="flex items-center space-x-1.5">
                     <button
-                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-2xl text-gray-500 hover:text-gray-900"
+                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-lg text-gray-500 hover:text-gray-900"
                       onClick={() => pushQuestion(id)}
                       aria-label="Plus"
                     >
@@ -79,7 +80,7 @@ const InnerApp = () => {
                       )}
                     />
                     <button
-                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-2xl text-gray-500 hover:text-gray-900"
+                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-lg text-gray-500 hover:text-gray-900"
                       onClick={() => popQuestion(id)}
                       aria-label="Minus"
                     >
@@ -92,12 +93,12 @@ const InnerApp = () => {
           </div>
         )}
         {showQuestions && (
-          <div className="space-y-4">
+          <div className="space-y-2 sm:space-y-4">
             {questionGroups
               .filter(({ questions }) => questions.length > 0)
               .map(({ name, questions, color }) => (
                 <div
-                  className="space-y-5 bg-white rounded-lg px-5 sm:px-6 pt-5 pb-3 border border-gray-300 animate-slide-up"
+                  className="space-y-3 sm:space-y-5 bg-white rounded-lg px-4 sm:px-6 pt-4 sm:pt-5 pb-2 sm:pb-3 border border-gray-300 animate-slide-up"
                   // style={{ animationDelay: `${index * 200}ms` }}
                   key={name}
                 >
@@ -106,7 +107,7 @@ const InnerApp = () => {
                     {questions.map(({ title, id }) => (
                       <li
                         key={id}
-                        className="py-3 flex items-center justify-between space-x-5 group"
+                        className="py-2 sm:py-3 flex items-center justify-between space-x-5 group"
                       >
                         <div className="w-full text-gray-800 sm:text-base text-sm">
                           {title}
@@ -142,7 +143,7 @@ const InnerApp = () => {
       >
         <div
           className={classnames(
-            'sm:h-20 h-16 flex justify-between items-center px-3 sm:px-6 max-w-6xl mx-auto',
+            'sm:h-20 h-16 flex justify-between items-center px-3 sm:px-6 max-w-3xl mx-auto',
           )}
         >
           {!showQuestions ? (
@@ -154,14 +155,18 @@ const InnerApp = () => {
                 question
                 {totalQuestions > 1 ? 's' : ''}
               </div>
-              <div className="flex items-center space-x-10">
+              <div className="flex items-center space-x-5 sm:space-x-8">
                 <button
                   onClick={() => reset()}
                   aria-label="Reset"
                   title="Reset"
-                  className="hidden sm:inline-flex items-center text-gray-600 font-medium hover:text-gray-900 transition duration-150 sm:text-base text-sm"
+                  className="sm:inline-flex items-center text-gray-600 font-medium hover:text-gray-900 transition duration-150 sm:text-base text-sm"
                 >
-                  <BiReset className="text-2xl mr-1" /> Reset
+                  <BiReset className="text-2xl sm:mr-1" />
+                  <span className="hidden sm:inline" aria-hidden>
+                    {' '}
+                    Reset
+                  </span>
                 </button>
                 <Button
                   onClick={() => {
@@ -184,17 +189,18 @@ const InnerApp = () => {
               >
                 <BiArrowBack className="text-xl mr-2" /> Go back
               </button>
-              <div className="flex items-center space-x-10">
+              <div className="flex items-center space-x-5 sm:space-x-8">
                 <button
                   aria-label="Reset"
                   title="Reset"
-                  className="hidden sm:inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
+                  className="sm:inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
                   onClick={() => {
                     refresh();
                     window.scrollTo({ top: 0 });
                   }}
                 >
-                  <BiRefresh className="mr-2 text-2xl" /> Refresh
+                  <BiRefresh className="sm:mr-2 text-2xl" />
+                  <span className="hidden sm:inline"> Refresh</span>
                 </button>
                 <Button
                   onClick={() => {
@@ -206,9 +212,17 @@ const InnerApp = () => {
                       [],
                     );
                     copy(questions.join('\n'));
+                    alert('Copied');
                   }}
+                  aria-label="Copy to clipboard"
                 >
-                  <BiCopy className="mr-2 text-lg" /> Copy to clipboard
+                  <BiCopy className="mr-2 text-base sm:text-lg" aria-hidden />{' '}
+                  <span className="hidden sm:inline" aria-hidden>
+                    Copy to clipboard
+                  </span>
+                  <span className="sm:hidden inline" aria-hidden>
+                    Copy
+                  </span>
                 </Button>
               </div>
             </>

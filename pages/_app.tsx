@@ -12,8 +12,9 @@ class MyApp extends App {
         <Head>
           <meta
             name="viewport"
-            content="width=device-width, initial-scale=1, user-scalable=no"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
           />
+
           <title>1:1s question generator</title>
           <meta
             name="description"
