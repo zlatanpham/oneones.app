@@ -7,8 +7,6 @@ import { Client } from '@notionhq/client';
 import { Badge, Button } from 'components';
 import {
   BiRefresh,
-  BiPlus,
-  BiMinus,
   BiReset,
   BiRightArrowAlt,
   BiArrowBack,
@@ -16,8 +14,7 @@ import {
 } from 'react-icons/bi';
 import classnames from 'classnames';
 import { useClipboard } from 'hooks';
-
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+import { NumberInput } from 'components/NumberInput';
 
 const InnerApp = () => {
   const [showQuestions, setShowQuestions] = useState(false);
@@ -29,8 +26,8 @@ const InnerApp = () => {
     reset,
     refreshQuestion,
   } = useAppContext();
-  const { copy } = useClipboard();
 
+  const { copy } = useClipboard();
   const totalQuestions = questionGroups.reduce(
     (a, c) => a + c.questions.length,
     0,
@@ -60,33 +57,11 @@ const InnerApp = () => {
               {questionGroups.map(({ name, id, questions, color }) => (
                 <li className="flex justify-between py-3 space-x-5" key={id}>
                   <Badge color={color}>{name}</Badge>
-                  <div className="flex items-center space-x-1.5">
-                    <button
-                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-lg text-gray-500 hover:text-gray-900"
-                      onClick={() => pushQuestion(id)}
-                      aria-label="Plus"
-                    >
-                      <BiPlus aria-hidden />
-                    </button>
-                    <input
-                      type="text"
-                      readOnly
-                      value={questions.length}
-                      className={classnames(
-                        'text-center w-10 px-2 rounded-full font-medium sm:text-base text-sm h-6 transition-all duration-150',
-                        questions.length === 0
-                          ? 'text-gray-500 bg-gray-100 border-gray-300'
-                          : 'text-gray-800 bg-secondary border-secondary',
-                      )}
-                    />
-                    <button
-                      className="w-6 h-6 rounded-full border-gray-200 border flex justify-center items-center p-0 text-lg text-gray-500 hover:text-gray-900"
-                      onClick={() => popQuestion(id)}
-                      aria-label="Minus"
-                    >
-                      <BiMinus aria-hidden />
-                    </button>
-                  </div>
+                  <NumberInput
+                    value={questions.length}
+                    onMinusClick={() => popQuestion(id)}
+                    onPlusClick={() => pushQuestion(id)}
+                  />
                 </li>
               ))}
             </ul>
@@ -99,7 +74,6 @@ const InnerApp = () => {
               .map(({ name, questions, color }) => (
                 <div
                   className="space-y-3 sm:space-y-5 bg-white rounded-lg px-4 sm:px-6 pt-4 sm:pt-5 pb-2 sm:pb-3 border border-gray-300 animate-slide-up"
-                  // style={{ animationDelay: `${index * 200}ms` }}
                   key={name}
                 >
                   <Badge color={color}>{name}</Badge>
@@ -217,12 +191,7 @@ const InnerApp = () => {
                   aria-label="Copy to clipboard"
                 >
                   <BiCopy className="mr-2 text-base sm:text-lg" aria-hidden />{' '}
-                  <span className="hidden sm:inline" aria-hidden>
-                    Copy to clipboard
-                  </span>
-                  <span className="sm:hidden inline" aria-hidden>
-                    Copy
-                  </span>
+                  Copy
                 </Button>
               </div>
             </>
@@ -246,6 +215,8 @@ function App({
     </AppContextProvider>
   );
 }
+
+const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export const getStaticProps: GetStaticProps = async () => {
   const getData = async (
