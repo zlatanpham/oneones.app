@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { MultiSelect } from 'types/schema';
 import { createContext, getRandomInt, mapQuestions } from 'utils';
 
@@ -14,6 +14,7 @@ interface AppContextValues {
   refreshQuestion: (id: string) => void;
   refresh: () => void;
   reset: () => void;
+  totalQuestions: number;
 }
 
 const [Provider, useAppContext] = createContext<AppContextValues>({});
@@ -152,6 +153,10 @@ export const AppContextProvider: React.FC<{
     });
   };
 
+  const totalQuestions = useMemo(() => {
+    return questionGroups.reduce((a, c) => a + c.questions.length, 0);
+  }, [questionGroups]);
+
   return (
     <Provider
       value={{
@@ -162,6 +167,7 @@ export const AppContextProvider: React.FC<{
         refresh,
         reset,
         refreshQuestion,
+        totalQuestions,
       }}
     >
       {children}

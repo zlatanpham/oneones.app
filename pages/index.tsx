@@ -15,6 +15,7 @@ import {
 import classnames from 'classnames';
 import { useClipboard } from 'hooks';
 import { NumberInput } from 'components/NumberInput';
+import { Footer } from 'components/Footer';
 
 const InnerApp = () => {
   const [showQuestions, setShowQuestions] = useState(false);
@@ -46,10 +47,9 @@ const InnerApp = () => {
       </div>
 
       <div
-        className={classnames('lg:max-w-3xl max-w-2xl mx-auto sm:px-5 px-4', {
-          'pb-20 sm:pb-28': totalQuestions > 0,
-          'pb-8': totalQuestions === 0,
-        })}
+        className={classnames(
+          'lg:max-w-3xl max-w-2xl mx-auto sm:px-5 px-4 pb-8',
+        )}
       >
         {!showQuestions && (
           <div className="bg-white rounded-lg px-4 sm:px-6 py-1 sm:py-3 border border-gray-300 max-w-xl mx-auto select-none">
@@ -198,6 +198,7 @@ const InnerApp = () => {
           )}
         </div>
       </div>
+      <Footer />
     </>
   );
 };

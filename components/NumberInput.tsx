@@ -19,6 +19,7 @@ export const NumberInput = ({ onMinusClick, onPlusClick, value }: Props) => (
     <input
       type="text"
       readOnly
+      tabIndex={-1}
       value={value}
       className={classnames(
         'text-center w-10 px-2 rounded-full font-medium sm:text-base text-sm h-6 transition-all duration-150',
