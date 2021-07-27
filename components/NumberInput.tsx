@@ -23,9 +23,10 @@ export const NumberInput = ({ onMinusClick, onPlusClick, value }: Props) => (
       value={value}
       className={classnames(
         'text-center w-10 px-2 rounded-full font-medium sm:text-base text-sm h-6 transition-all duration-150',
-        value === 0
-          ? 'text-gray-500 bg-gray-100 border-gray-300'
-          : 'text-gray-800 bg-secondary border-secondary',
+        {
+          'text-gray-500 bg-gray-100 border-gray-300': value === 0,
+          'text-gray-800 bg-secondary border-secondary': value !== 0,
+        },
       )}
     />
     <button

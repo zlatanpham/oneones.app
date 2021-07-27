@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MultiSelect } from 'types/schema';
 import { getTags, mapQuestions } from 'utils/mapping';
 import { GetStaticProps } from 'next';
@@ -26,13 +26,14 @@ const InnerApp = () => {
     refresh,
     reset,
     refreshQuestion,
+    totalQuestions,
   } = useAppContext();
 
   const { copy } = useClipboard();
-  const totalQuestions = questionGroups.reduce(
-    (a, c) => a + c.questions.length,
-    0,
-  );
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [showQuestions]);
 
   return (
     <>
@@ -145,7 +146,6 @@ const InnerApp = () => {
                 <Button
                   onClick={() => {
                     setShowQuestions(true);
-                    window.scrollTo({ top: 0 });
                   }}
                 >
                   Generate <BiRightArrowAlt className="text-xl ml-1" />
@@ -157,7 +157,6 @@ const InnerApp = () => {
               <button
                 onClick={() => {
                   setShowQuestions(false);
-                  window.scrollTo({ top: 0 });
                 }}
                 className="inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
               >
@@ -169,8 +168,8 @@ const InnerApp = () => {
                   title="Reset"
                   className="sm:inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
                   onClick={() => {
-                    refresh();
                     window.scrollTo({ top: 0 });
+                    refresh();
                   }}
                 >
                   <BiRefresh className="sm:mr-2 text-2xl" />
