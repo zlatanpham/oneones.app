@@ -1,7 +1,9 @@
 require('dotenv').config();
 
 module.exports = {
-  env: {},
+  env: {
+    GA_TRACKING_ID: process.env.GA_TRACKING_ID,
+  },
   webpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       config.resolve.alias['react'] = 'preact/compat';

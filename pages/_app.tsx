@@ -3,6 +3,10 @@ import React from 'react';
 import App from 'next/app';
 import Head from 'next/head';
 
+// Node env may not support destructuring
+// eslint-disable-next-line prefer-destructuring
+const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
+
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
@@ -37,6 +41,24 @@ class MyApp extends App {
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
             rel="stylesheet"
           />
+
+          {GA_TRACKING_ID && (
+            <>
+              <script
+                async
+                src="https://www.google-analytics.com/analytics.js"
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `
+                  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+                  ga('create', '${GA_TRACKING_ID}', 'auto');
+                  ga('send', 'pageview');
+                  `,
+                }}
+              />
+            </>
+          )}
         </Head>
         <main>
           <Component {...pageProps} />
