@@ -3,6 +3,13 @@
   "globals": {
     "chrome": true
   },
+  "parserOptions": {
+    "ecmaVersion": 10,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": ["./tsconfig.json"]
+  },
   "rules": {},
   "overrides": [
     {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const copyToClipboard = (content: string) => {
-  var textArea = document.createElement('textarea');
+  const textArea = document.createElement('textarea');
 
   //
   // *** This styling is an extra step which is likely not required. ***

@@ -10,6 +10,7 @@ types
 next.config.js
 out
 
+
 # test
 coverage
 cypress

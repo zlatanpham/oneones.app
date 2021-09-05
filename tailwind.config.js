@@ -37,7 +37,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    plugin(function ({ addUtilities }) {
+    plugin(({ addUtilities }) => {
       const newUtilities = {
         '-z-1': {
           zIndex: -1,
