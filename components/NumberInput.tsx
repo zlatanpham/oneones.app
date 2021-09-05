@@ -1,10 +1,10 @@
-import { BiPlus, BiMinus } from 'react-icons/bi';
-import classnames from 'classnames';
+import { BiPlus, BiMinus } from 'react-icons/bi'
+import classnames from 'classnames'
 
 interface Props {
-  onPlusClick: () => void;
-  onMinusClick: () => void;
-  value: number;
+  onPlusClick: () => void
+  onMinusClick: () => void
+  value: number
 }
 
 export const NumberInput = ({ onMinusClick, onPlusClick, value }: Props) => (
@@ -37,4 +37,4 @@ export const NumberInput = ({ onMinusClick, onPlusClick, value }: Props) => (
       <BiPlus aria-hidden />
     </button>
   </div>
-);
+)

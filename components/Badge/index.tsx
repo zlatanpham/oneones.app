@@ -1,8 +1,8 @@
-import classnames from 'classnames';
+import classnames from 'classnames'
 
 interface Props {
-  color: string;
-  children: string;
+  color: string
+  children: string
 }
 
 export const Badge = ({ color, children }: Props) => (
@@ -25,4 +25,4 @@ export const Badge = ({ color, children }: Props) => (
   >
     {children}
   </span>
-);
+)

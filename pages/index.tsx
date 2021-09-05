@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { MultiSelect } from 'types/schema';
-import { getTags, mapQuestions } from 'utils/mapping';
-import { GetStaticProps } from 'next';
-import { AppContextProvider, useAppContext } from 'context/AppContextProvider';
-import { Client } from '@notionhq/client';
-import { Badge, Button } from 'components';
+import React, { useEffect, useState } from 'react'
+import { MultiSelect } from 'types/schema'
+import { getTags, mapQuestions } from 'utils/mapping'
+import { GetStaticProps } from 'next'
+import { AppContextProvider, useAppContext } from 'context/AppContextProvider'
+import { Client } from '@notionhq/client'
+import { Badge, Button } from 'components'
 import {
   BiRefresh,
   BiReset,
   BiRightArrowAlt,
   BiArrowBack,
   BiCopy,
-} from 'react-icons/bi';
-import classnames from 'classnames';
-import { useClipboard } from 'hooks';
-import { NumberInput } from 'components/NumberInput';
-import { Footer } from 'components/Footer';
+} from 'react-icons/bi'
+import classnames from 'classnames'
+import { useClipboard } from 'hooks'
+import { NumberInput } from 'components/NumberInput'
+import { Footer } from 'components/Footer'
 
 const InnerApp = () => {
-  const [showQuestions, setShowQuestions] = useState(false);
+  const [showQuestions, setShowQuestions] = useState(false)
   const {
     questionGroups,
     popQuestion,
@@ -27,13 +27,13 @@ const InnerApp = () => {
     reset,
     refreshQuestion,
     totalQuestions,
-  } = useAppContext();
+  } = useAppContext()
 
-  const { copy } = useClipboard();
+  const { copy } = useClipboard()
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, [showQuestions]);
+    window.scrollTo({ top: 0 })
+  }, [showQuestions])
 
   return (
     <>
@@ -145,7 +145,7 @@ const InnerApp = () => {
                 </button>
                 <Button
                   onClick={() => {
-                    setShowQuestions(true);
+                    setShowQuestions(true)
                   }}
                 >
                   Generate <BiRightArrowAlt className="text-xl ml-1" />
@@ -156,7 +156,7 @@ const InnerApp = () => {
             <>
               <button
                 onClick={() => {
-                  setShowQuestions(false);
+                  setShowQuestions(false)
                 }}
                 className="inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
               >
@@ -168,8 +168,8 @@ const InnerApp = () => {
                   title="Reset"
                   className="sm:inline-flex items-center font-medium text-gray-600 hover:text-gray-900 transition duration-150 sm:text-base text-sm"
                   onClick={() => {
-                    window.scrollTo({ top: 0 });
-                    refresh();
+                    window.scrollTo({ top: 0 })
+                    refresh()
                   }}
                 >
                   <BiRefresh className="sm:mr-2 text-2xl" />
@@ -183,9 +183,9 @@ const InnerApp = () => {
                         ...c.questions.map(({ title }) => title),
                       ],
                       [],
-                    );
-                    copy(questions.join('\n'));
-                    alert('Copied');
+                    )
+                    copy(questions.join('\n'))
+                    alert('Copied')
                   }}
                   aria-label="Copy to clipboard"
                 >
@@ -199,24 +199,24 @@ const InnerApp = () => {
       </div>
       <Footer />
     </>
-  );
-};
+  )
+}
 
 function App({
   questions,
   tags,
 }: {
-  questions: ReturnType<typeof mapQuestions>;
-  tags: MultiSelect[];
+  questions: ReturnType<typeof mapQuestions>
+  tags: MultiSelect[]
 }) {
   return (
     <AppContextProvider questions={questions} tags={tags}>
       <InnerApp />
     </AppContextProvider>
-  );
+  )
 }
 
-const notion = new Client({ auth: process.env.NOTION_API_KEY });
+const notion = new Client({ auth: process.env.NOTION_API_KEY })
 
 export const getStaticProps: GetStaticProps = async () => {
   const getData = async (
@@ -228,28 +228,28 @@ export const getStaticProps: GetStaticProps = async () => {
       database_id: process.env.NOTION_DATABASE_ID || '',
       page_size: pageSize,
       start_cursor: cursor,
-    });
+    })
 
-    holder.push(...response.results);
+    holder.push(...response.results)
 
     if (
       response.has_more &&
       response.next_cursor &&
       process.env.NODE_ENV === 'production'
     ) {
-      await getData(response.next_cursor, pageSize, holder);
+      await getData(response.next_cursor, pageSize, holder)
     }
-  };
+  }
 
-  const response: any[] = [];
-  await getData(undefined, 100, response);
+  const response: any[] = []
+  await getData(undefined, 100, response)
 
-  const questions = mapQuestions(response || []);
-  const tags = getTags(response || []);
+  const questions = mapQuestions(response || [])
+  const tags = getTags(response || [])
 
   return {
     props: { questions, tags },
-  };
-};
+  }
+}
 
-export default App;
+export default App

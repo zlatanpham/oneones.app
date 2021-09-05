@@ -6,6 +6,14 @@ storybook-static/
 package-lock.json
 yarn.lock
 package.json
+
 # next.js
 /.next/
 /out/
+img/
+.husky/
+*.png
+*.jpeg
+*.webp
+*.ico
+

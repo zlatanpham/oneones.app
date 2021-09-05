@@ -1,15 +1,15 @@
-import '../styles/index.css';
-import React from 'react';
-import App from 'next/app';
-import Head from 'next/head';
+import '../styles/index.css'
+import React from 'react'
+import App from 'next/app'
+import Head from 'next/head'
 
 // Node env may not support destructuring
 // eslint-disable-next-line prefer-destructuring
-const GA_TRACKING_ID = process.env.GA_TRACKING_ID;
+const GA_TRACKING_ID = process.env.GA_TRACKING_ID
 
 class MyApp extends App {
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps } = this.props
 
     return (
       <>
@@ -64,7 +64,7 @@ class MyApp extends App {
           <Component {...pageProps} />
         </main>
       </>
-    );
+    )
   }
 }
-export default MyApp;
+export default MyApp

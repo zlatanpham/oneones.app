@@ -1,3 +1,3 @@
-export * from './createContext';
-export * from './mapping';
-export * from './number';
+export * from './createContext'
+export * from './mapping'
+export * from './number'

@@ -1,5 +1,5 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from 'react'
+import classnames from 'classnames'
 
 export const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
   children,
@@ -16,5 +16,5 @@ export const Button: React.FC<React.HTMLAttributes<HTMLButtonElement>> = ({
     >
       {children}
     </button>
-  );
-};
+  )
+}

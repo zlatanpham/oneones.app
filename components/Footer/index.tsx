@@ -1,8 +1,8 @@
-import { useAppContext } from 'context/AppContextProvider';
-import classnames from 'classnames';
+import { useAppContext } from 'context/AppContextProvider'
+import classnames from 'classnames'
 
 export const Footer = () => {
-  const { totalQuestions } = useAppContext();
+  const { totalQuestions } = useAppContext()
 
   return (
     <footer className="mx-auto max-w-6xl px-5 text-center space-y-1">
@@ -33,5 +33,5 @@ export const Footer = () => {
         </a>
       </div>
     </footer>
-  );
-};
+  )
+}
